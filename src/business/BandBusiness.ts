@@ -1,6 +1,6 @@
 import { BandDatabase } from "../data/BandDatabase"
 import { CustomError } from "../error/BaseError"
-import { BandInputDTO } from "../model/Band"
+import { Band, BandInputDTO } from "../model/Band"
 import { UserRole } from "../model/User"
 import { Authenticator } from "../services/Authenticator"
 import { IdGenerator } from "../services/IdGenerator"
@@ -33,5 +33,24 @@ export class BandBusiness {
             band.musicGenre,
             band.responsible
         )
+    }
+
+    public async getBandByIdOrName(name: string, id: string): Promise<Band> {
+
+        let result
+
+        if (name) {
+            result = await this.bandDatabase.getBandByNameOrID(name)
+        }
+
+        if (id) {
+            result = await this.bandDatabase.getBandByNameOrID(id)
+        }
+
+        if (!result) {
+            throw new CustomError('Nenhuma banda encontrada', 404)
+        }
+
+        return result
     }
 }
