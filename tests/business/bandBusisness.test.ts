@@ -35,8 +35,13 @@ describe('Testing BandBusiness create band', () => {
 
     test('Testing creating a band with valid inputs', async () => {
         try {
-            await bandBusiness.createBand({ name: 'Balada Melosa', musicGenre: 'rock', responsible: 'João' }, 'valid_token')
+            const result = await bandBusiness.createBand({ 
+                name: 'Balada Melosa', 
+                musicGenre: 'rock', 
+                responsible: 'João' 
+            }, 'valid_token')
             
+            expect(result).toBeUndefined
         } catch (error: any) {
             console.log(error)
         }

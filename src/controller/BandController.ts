@@ -43,13 +43,10 @@ export class BandController {
 
             const band = await bandBusiness.getBandByIdOrName(name, id)
 
-
-
-
-
+            res.status(200).send(band)
 
         } catch (error: any) {
-            
+            res.status(error.statusCode).send({ message: error.sqlMessage || error.message })
         }
     }
 
