@@ -14,7 +14,7 @@ export class UserBusiness {
         private authenticator: Authenticator
     ) { }
 
-    async signUp(user: UserInputDTO) {
+    public async signUp(user: UserInputDTO): Promise<string> {
 
         if (!user.name || !user.email || !user.password || !user.role) {
             throw new CustomError("Missing input", 422)
@@ -32,20 +32,20 @@ export class UserBusiness {
 
         const hashPassword = await this.hashManager.hash(user.password)
 
-        await this.userDatabase.createUser(new User(
+        await this.userDatabase.createUser(
             id,
-            user.name,
             user.email,
+            user.name,
             hashPassword,
             User.stringToUserRole(user.role)
-        ))
+        )
 
         const accessToken = this.authenticator.generateToken({ id, role: user.role })
 
         return accessToken
     }
 
-    async login(user: LoginInputDTO) {
+    public async login(user: LoginInputDTO): Promise<string> {
 
         const userFromDB = await this.userDatabase.getUserByEmail(user.email)
 
