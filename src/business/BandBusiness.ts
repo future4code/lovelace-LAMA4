@@ -21,7 +21,7 @@ export class BandBusiness {
 
         const tokenData = this.authenticator.getData(token)
 
-        if (tokenData.role !== UserRole.ADMIN) {
+        if (tokenData.role?.toUpperCase() !== UserRole.ADMIN) {
             throw new CustomError('You must be an admin to add a band', 403)
         }
 
@@ -37,7 +37,7 @@ export class BandBusiness {
 
     public async getBandByIdOrName(name: string, id: string): Promise<Band> {
 
-        let result
+        let result: any
 
         if (name) {
             result = await this.bandDatabase.getBandByNameOrID(name)
@@ -47,10 +47,12 @@ export class BandBusiness {
             result = await this.bandDatabase.getBandByNameOrID(id)
         }
 
-        if (!result) {
+        if (result.length === 0) {
             throw new CustomError('Nenhuma banda encontrada', 404)
         }
 
-        return result
+        const band = Band.toBandModel(result[0])
+
+        return band
     }
 }

@@ -17,13 +17,13 @@ export class UserDatabase extends BaseDatabase {
       .into(UserDatabase.TABLE_NAME)
   }
 
-  public async getUserByEmail(email: string): Promise<User> {
+  public async getUserByEmail(email: string): Promise<User[]> {
     const result = await this.getConnection()
       .select()
       .from(UserDatabase.TABLE_NAME)
       .where({ email })
 
-    return User.toUserModel(result[0])
+    return result
 
   }
 }

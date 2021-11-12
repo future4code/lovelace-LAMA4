@@ -49,17 +49,19 @@ export class UserBusiness {
 
         const userFromDB = await this.userDatabase.getUserByEmail(user.email)
 
-        if (!userFromDB) {
+        if (userFromDB.length === 0) {
             throw new CustomError('Invalid credentials', 401)
         }
 
-        const hashCompare = await this.hashManager.compare(user.password, userFromDB.getPassword())
+        const instanceUserFromDB = User.toUserModel(userFromDB[0])
+
+        const hashCompare = await this.hashManager.compare(user.password, instanceUserFromDB.getPassword())
 
         if (!hashCompare) {
             throw new CustomError("Invalid credentials", 401)
         }
             
-        const accessToken = this.authenticator.generateToken({ id: userFromDB.getId(), role: userFromDB.getRole() })
+        const accessToken = this.authenticator.generateToken({ id: instanceUserFromDB.getId(), role: instanceUserFromDB.getRole() })
 
         return accessToken
     }

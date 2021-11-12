@@ -16,14 +16,13 @@ export class BandDatabase extends BaseDatabase {
       .into(BandDatabase.TABLE_NAME)
   }
 
-  public async getBandByNameOrID(input: string): Promise<Band> {
+  public async getBandByNameOrID(input: string): Promise<Band[]> {
     const result = await this.getConnection()
-      .select()
+      .select('*')
       .from(BandDatabase.TABLE_NAME)
-      .where('name', 'like', '%input%')
+      .where('name', 'like', `%${input}%`)
       .orWhere({ id: input })
 
-    return Band.toBandModel(result[0])
-
+    return result
   }
 }

@@ -38,8 +38,8 @@ export class Band {
         this.responsible = responsible
     }
 
-    static toBandModel(user: any): Band {
-        return new Band(user.id, user.name, user.email, user.password)
+    static toBandModel(band: any): Band {
+        return new Band(band.id, band.name, band.music_genre, band.responsible)
     }
 }
 
