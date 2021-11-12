@@ -4,6 +4,6 @@ export class HashManagerMock {
     }
 
     public async compare(string: string, hash: string): Promise<boolean> {
-        
+        return string === hash
     }
 }

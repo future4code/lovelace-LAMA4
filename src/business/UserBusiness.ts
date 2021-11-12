@@ -14,7 +14,7 @@ export class UserBusiness {
         private authenticator: Authenticator
     ) { }
 
-    async createUser(user: UserInputDTO) {
+    async signUp(user: UserInputDTO) {
 
         if (!user.name || !user.email || !user.password || !user.role) {
             throw new CustomError("Missing input", 422)
@@ -45,21 +45,23 @@ export class UserBusiness {
         return accessToken
     }
 
-    async getUserByEmail(user: LoginInputDTO) {
+    async login(user: LoginInputDTO) {
 
         const userFromDB = await this.userDatabase.getUserByEmail(user.email)
 
         if (!userFromDB) {
-            throw new CustomError('User not found', 404)
+            throw new CustomError('Invalid credentials', 401)
         }
 
         const hashCompare = await this.hashManager.compare(user.password, userFromDB.getPassword())
 
-        const accessToken = this.authenticator.generateToken({ id: userFromDB.getId(), role: userFromDB.getRole() })
+        console.log(hashCompare)
 
         if (!hashCompare) {
-            throw new CustomError("Invalid Password!", 422)
+            throw new CustomError("Invalid credentials", 401)
         }
+            
+        const accessToken = this.authenticator.generateToken({ id: userFromDB.getId(), role: userFromDB.getRole() })
 
         return accessToken
     }

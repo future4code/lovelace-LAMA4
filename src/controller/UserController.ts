@@ -25,7 +25,7 @@ export class UserController {
                 role: req.body.role
             }
 
-            const token = await userBusiness.createUser(input);
+            const token = await userBusiness.signUp(input);
 
             res.status(200).send({ token });
 
@@ -45,7 +45,7 @@ export class UserController {
                 password: req.body.password
             };
 
-            const token = await userBusiness.getUserByEmail(loginData);
+            const token = await userBusiness.login(loginData);
 
             res.status(200).send({ token });
 

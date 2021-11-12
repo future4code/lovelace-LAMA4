@@ -1,5 +1,5 @@
 import { User } from "../../src/model/User";
-import { adminUserMock, normalUserMock } from "./UserMock";
+import { adminUserMock, normalUserMock } from "./userMock";
 
 export class UserDatabaseMock {
     public async createUser(user: User): Promise<void> {
