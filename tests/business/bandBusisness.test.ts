@@ -32,4 +32,13 @@ describe('Testing BandBusiness create band', () => {
             expect(error.statusCode).toBe(403)
         }
     })
+
+    test('Testing creating a band with valid inputs', async () => {
+        try {
+            await bandBusiness.createBand({ name: 'Balada Melosa', musicGenre: 'rock', responsible: 'João' }, 'valid_token')
+            
+        } catch (error: any) {
+            console.log(error)
+        }
+    })
 })
