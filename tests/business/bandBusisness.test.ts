@@ -2,7 +2,7 @@ import { BandBusiness } from '../../src/business/BandBusiness'
 import { BandDatabase } from '../../src/data/BandDatabase'
 import { AuthenticatorMock } from '../mocks/AuthenticatorMock'
 import { BandDatabaseMock } from '../mocks/BandDatabaseMock'
-import { bandMock } from '../mocks/bandMock'
+import { bandClassMock, bandFromDBMock } from '../mocks/bandMock'
 import { IdGeneratorMock } from '../mocks/IdGeneratorMock'
 
 const bandBusiness = new BandBusiness(
