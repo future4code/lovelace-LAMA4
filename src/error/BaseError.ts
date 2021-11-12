@@ -1,6 +1,9 @@
-export abstract class BaseError extends Error {
-    constructor(message: string, public code: number) {
-      super(message);
-    }
+export class CustomError extends Error {
+  public statusCode: number;
+
+  constructor(message: string, statusCode: number = 400) {
+      super(message)
+      this.statusCode = statusCode
   }
+}
   
