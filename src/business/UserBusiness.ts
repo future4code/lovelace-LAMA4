@@ -55,8 +55,6 @@ export class UserBusiness {
 
         const hashCompare = await this.hashManager.compare(user.password, userFromDB.getPassword())
 
-        console.log(hashCompare)
-
         if (!hashCompare) {
             throw new CustomError("Invalid credentials", 401)
         }

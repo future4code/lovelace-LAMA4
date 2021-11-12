@@ -1,3 +1,4 @@
+import { UserRole } from "../../src/model/User"
 
 interface AuthenticationData {
     id: string
@@ -9,10 +10,17 @@ export class AuthenticatorMock {
         return "token_mock"
     }
 
-    // public getData(token: string): AuthenticationData {
-    //     return {
-    //         id: 'id_mock',
-    //         role: 
-    //     }
-    // }
+    public getData(token: string): AuthenticationData {
+        if (token === "valid_token") {
+            return {
+                id: "id_mock",
+                role: UserRole.ADMIN
+            }
+        } else {
+            return {
+                id: "id_mock",
+                role: UserRole.NORMAL
+            }
+        }
+    }
 }

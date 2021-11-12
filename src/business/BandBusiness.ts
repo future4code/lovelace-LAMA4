@@ -1,9 +1,9 @@
-import { BandDatabase } from "../data/BandDatabase";
-import { CustomError } from "../error/BaseError";
-import { BandInputDTO } from "../model/Band";
-import { UserRole } from "../model/User";
-import { Authenticator } from "../services/Authenticator";
-import { IdGenerator } from "../services/IdGenerator";
+import { BandDatabase } from "../data/BandDatabase"
+import { CustomError } from "../error/BaseError"
+import { BandInputDTO } from "../model/Band"
+import { UserRole } from "../model/User"
+import { Authenticator } from "../services/Authenticator"
+import { IdGenerator } from "../services/IdGenerator"
 
 export class BandBusiness {
 
@@ -34,7 +34,4 @@ export class BandBusiness {
             band.responsible
         )
     }
-
-
-
 }
