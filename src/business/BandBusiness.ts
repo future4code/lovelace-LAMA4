@@ -1,6 +1,6 @@
 import { BandDatabase } from "../data/BandDatabase"
 import { CustomError } from "../error/BaseError"
-import { Band, BandInputDTO } from "../model/Band"
+import { Band, BandData, BandInputDTO } from "../model/Band"
 import { UserRole } from "../model/User"
 import { Authenticator } from "../services/Authenticator"
 import { IdGenerator } from "../services/IdGenerator"
@@ -11,7 +11,7 @@ export class BandBusiness {
         private idGenerator: IdGenerator,
         private authenticator: Authenticator,
         private bandDatabase: BandDatabase
-        ){}
+    ) { }
 
     public async createBand(band: BandInputDTO, token: string): Promise<void> {
 
@@ -37,7 +37,7 @@ export class BandBusiness {
 
     public async getBandByIdOrName(name: string, id: string): Promise<Band> {
 
-        let result: any
+        let result: BandData[] = []
 
         if (name) {
             result = await this.bandDatabase.getBandByNameOrID(name)

@@ -1,5 +1,5 @@
 import { BaseDatabase } from "./BaseDatabase"
-import { Band } from "../model/Band"
+import { BandData } from "../model/Band"
 
 export class BandDatabase extends BaseDatabase {
 
@@ -16,7 +16,7 @@ export class BandDatabase extends BaseDatabase {
       .into(BandDatabase.TABLE_NAME)
   }
 
-  public async getBandByNameOrID(input: string): Promise<Band[]> {
+  public async getBandByNameOrID(input: string): Promise<BandData[]> {
     const result = await this.getConnection()
       .select('*')
       .from(BandDatabase.TABLE_NAME)

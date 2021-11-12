@@ -1,8 +1,8 @@
-import { Band } from "../../src/model/Band";
+import { BandData } from "../../src/model/Band";
 
-export const bandMock = new Band(
-    'id_mock',
-    'band1',
-    'rock',
-    'Eunice'
-)
+export const bandMock: BandData = {
+    id: 'id_mock',
+    name: 'band1',
+    music_genre: 'rock',
+    responsible: 'Eunice'
+}
