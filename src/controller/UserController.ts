@@ -1,10 +1,21 @@
-import { Request, Response } from "express";
-import { UserInputDTO, LoginInputDTO} from "../model/User";
-import { UserBusiness } from "../business/UserBusiness";
-import { BaseDatabase } from "../data/BaseDatabase";
+import { Request, Response } from "express"
+import { UserInputDTO, LoginInputDTO} from "../model/User"
+import { UserBusiness } from "../business/UserBusiness"
+import { BaseDatabase } from "../data/BaseDatabase"
+import { UserDatabase } from "../data/UserDatabase"
+import { IdGenerator } from "../services/IdGenerator"
+import { HashManager } from "../services/HashManager"
+import { Authenticator } from "../services/Authenticator"
+
+const userBusiness = new UserBusiness(
+    new IdGenerator(),
+    new HashManager(),
+    new UserDatabase(),
+    new Authenticator()
+)
 
 export class UserController {
-    async signup(req: Request, res: Response) {
+    public async signup(req: Request, res: Response) {
         try {
 
             const input: UserInputDTO = {
@@ -14,19 +25,18 @@ export class UserController {
                 role: req.body.role
             }
 
-            const userBusiness = new UserBusiness();
-            const token = await userBusiness.createUser(input);
+            const token = await userBusiness.signUp(input);
 
             res.status(200).send({ token });
 
-        } catch (error) {
-            res.status(400).send({ error: error.message });
+        } catch (error: any) {
+            res.status(error.statusCode).send({ message: error.sqlMessage || error.message })
         }
 
         await BaseDatabase.destroyConnection();
     }
 
-    async login(req: Request, res: Response) {
+    public async login(req: Request, res: Response) {
 
         try {
 
@@ -35,13 +45,12 @@ export class UserController {
                 password: req.body.password
             };
 
-            const userBusiness = new UserBusiness();
-            const token = await userBusiness.getUserByEmail(loginData);
+            const token = await userBusiness.login(loginData);
 
             res.status(200).send({ token });
 
-        } catch (error) {
-            res.status(400).send({ error: error.message });
+        } catch (error: any) {
+            res.status(error.statusCode).send({ message: error.sqlMessage || error.message })
         }
 
         await BaseDatabase.destroyConnection();
