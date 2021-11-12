@@ -1,13 +1,13 @@
 import { BandBusiness } from '../../src/business/BandBusiness'
 import { BandDatabase } from '../../src/data/BandDatabase'
-import { Authenticator } from '../../src/services/Authenticator'
+import { AuthenticatorMock } from '../mocks/AuthenticatorMock'
 import { BandDatabaseMock } from '../mocks/BandDatabaseMock'
 import { bandMock } from '../mocks/bandMock'
 import { IdGeneratorMock } from '../mocks/IdGeneratorMock'
 
 const bandBusiness = new BandBusiness(
     new IdGeneratorMock(),
-    new Authenticator(),
+    new AuthenticatorMock(),
     new BandDatabaseMock() as BandDatabase
 )
 
@@ -20,6 +20,16 @@ describe('Testing BandBusiness create band', () => {
         } catch (error: any) {
             expect(error.message).toEqual('Missing input')
             expect(error.statusCode).toBe(422)
+        }
+    })
+
+    test('Testing creating a band with an invalid token', async () => {
+        expect.assertions(2)
+        try {
+            await bandBusiness.createBand({ name: 'Balada Melosa', musicGenre: 'rock', responsible: 'João' }, 'invalid_token')
+        } catch (error: any) {
+            expect(error.message).toEqual('You must be an admin to add a band')
+            expect(error.statusCode).toBe(403)
         }
     })
 })
