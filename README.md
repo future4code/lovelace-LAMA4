@@ -54,7 +54,7 @@ npm run migrations
 
 * ## User SignUp
   * Method: POST
-  * Path: `/signup`
+  * Path: `/user/signup`
   * Body:
     * name (obrigatório)
     * email (obrigatório)
@@ -65,31 +65,29 @@ npm run migrations
 
 * ## User Login
   * Method: POST
-  * Path: `/login`
+  * Path: `/user/login`
   * Body:
     * email (obrigatório)
     * password (obrigatório)
   * Response:
     * token
 
-<!-- * ## Create post
+* ## Create Band
   * Method: POST
-  * Path: `/post`
+  * Path: `/band/create`
   * headers:
     * authorization: token
   * Body:
-    * picture (obrigatório)
-    * creationDate (obrigatório)
-    * type: `"normal" || "evento"` (obrigatório)
+    * name (obrigatório)
+    * musicGenre (obrigatório)
+    * responsible (obrigatório)
 
 
-* ## Get post by id
+* ## Get band by id or name
   * Method: GET
-  * Path: `/post/:id`
+  * Path: `/band?id=&name=`
   * Response: (return an error if nothing is found)
     * id
-    * picture
-    * description
-    * creationDate (formato `DD-MM-YYYY`)
-    * type
-    * userId -->
+    * name
+    * musicGenre
+    * responsible
